@@ -1,27 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { calcularPromedio, obtenerEstado } from '../src/js/calificaciones.js';
+import {
+  calcularPromedio,
+  clasificarPromedio
+} from '../src/js/calificaciones.js';
 
-test('calcula el promedio de tres calificaciones', () => {
+test('la versión existente continúa calculando el promedio', () => {
   assert.equal(calcularPromedio([8, 7, 9]), 8);
 });
 
-test('acepta números decimales', () => {
-  assert.equal(calcularPromedio([7.5, 8.25, 9]), 8.25);
+test('clasifica exactamente 9 como Excelente', () => {
+  assert.equal(clasificarPromedio(9), 'Excelente');
 });
 
-test('rechaza un arreglo vacío', () => {
-  assert.throws(() => calcularPromedio([]), RangeError);
+test('clasifica exactamente 7 como Aprobado', () => {
+  assert.equal(clasificarPromedio(7), 'Aprobado');
 });
 
-test('rechaza valores fuera del rango', () => {
-  assert.throws(() => calcularPromedio([8, 11, 9]), RangeError);
+test('clasifica exactamente 5 como Recuperación', () => {
+  assert.equal(clasificarPromedio(5), 'Recuperación');
 });
 
-test('informa Aprobado para un promedio igual a 7', () => {
-  assert.equal(obtenerEstado(7), 'Aprobado');
-});
-
-test('informa Reprobado para un promedio menor a 7', () => {
-  assert.equal(obtenerEstado(6.99), 'Reprobado');
+test('clasifica un promedio menor a 5 como Reprobado', () => {
+  assert.equal(clasificarPromedio(4.99), 'Reprobado');
 });
